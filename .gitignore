@@ -1,0 +1,80 @@
+# ---environment variables or secrets---
+.env
+.env.*
+!.env.example
+
+
+# ---virtual environment---
+sandbox/
+.venv/
+
+
+# ---raw and processed data for model context leads to bloating or copyright issues---
+rag_master_development_blueprint.md
+*.pdf
+*.docx
+
+data/raw/*
+data/processed/*
+data/models/*
+!data/README.md
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/models/.gitkeep
+
+
+# ---local workspace files/logs---
+*.code-workspace
+logs/
+*.log
+
+
+# ---dbt (data build tool)---
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+
+
+# ---python and build artifacts---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+wheels/
+*.egg-info/
+
+
+# ---testing, linters and orchestration---
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.prefect/
+
+
+# ---ML/docling/hugging face caches---
+.cache/
+*.sqlite
+*.sqlite3
+*.db
+mlruns/
+*.onnx
+*.safetensors
+
+
+# ---OS and editor files---
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+
+# ---decoupled workflows (Databricks)
+notebooks/
+*.jsonl
+*.parquet
+exports/

@@ -1,0 +1,35 @@
+# No top-level version declaration necessary, obsolete
+
+# Begin compose file definition
+# Project name for persistent volume
+name: rag
+
+# Container definition 
+services:
+  postgres:
+    image: pgvector/pgvector:0.8.0-pg16
+    container_name: ai_context_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?username for superuser in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?password for superuser in .env}
+      POSTGRES_DB: ${POSTGRES_DB:?dbname in .env}
+      APP_DB_USER: ${APP_DB_USER:?username for app user in .env}
+      APP_DB_PASSWORD: ${APP_DB_PASSWORD:?password for app in .env}
+    ports:
+      - 127.0.0.1:5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+# Named persistent volume
+volumes:
+  pgdata:
+
+

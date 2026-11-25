@@ -1,0 +1,43 @@
+# modern replacement for requirements.txt
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# base info
+[project]
+name = "rag"
+version = "1.0.0"
+description = "Data Engineering Pipeline To Feed Context To A Local LLM"
+readme = "README.md"
+requires-python = ">=3.13"
+
+# Only list top-level dependencies, rest will be installed automatically
+dependencies = [
+
+    "docling>=2.150.0",
+    "httpx>=0.28.0", 
+    "pgvector",
+    "prefect>=3.9.0",
+    "psycopg[binary]",
+    "pydantic>=2.14.0",
+    "pydantic-settings>=2.16.0",    
+    "python-dotenv>=1.2.0",
+    "sqlalchemy>=2.1.0",
+
+]
+
+[project.optional-dependencies]
+dbt = [
+    "dbt-postgres",
+]
+dev = [
+    "pytest", 
+    "ruff",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
